@@ -27,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function handleClickSearch() {
+    alert("id : ", e);
+    // const id = this.state.searchword
+    // if (word !== "")
+    //     this.getdata(word)
+}
+
 export default function SearchboxID() {
     const classes = useStyles();
 
@@ -38,7 +45,7 @@ export default function SearchboxID() {
                 inputProps={{ 'aria-label': 'search food reviews' }}
             />
             <Divider className={classes.divider} orientation="vertical" />
-            <IconButton color="primary" type="submit"  className={classes.iconButton} aria-label="directions">
+            <IconButton color="primary" type="submit" className={classes.iconButton} aria-label="directions" onClick={handleClickSearch(e)}>
                 <SearchIcon />
             </IconButton>
         </Paper>
