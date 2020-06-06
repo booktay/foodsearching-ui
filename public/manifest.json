@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "foodsearching-ui",
+  "name": "food searching ui",
   "icons": [
     {
       "src": "favicon.ico",
