@@ -38,7 +38,7 @@ export default function Header() {
                     </Typography>
                     <div className={classes.grow} />
                     <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><NavLink to="/id" className={classes.link}>Find Review by ID</NavLink></Button>
+                        <Button><NavLink to="/" className={classes.link}>Find Review by ID</NavLink></Button>
                         <Button><NavLink to="/keyword" className={classes.link}>Find Review by Keyword</NavLink></Button>
                         <Button><NavLink to="/edit" className={classes.link}>Edit Review by ID</NavLink></Button>
                     </ButtonGroup>
