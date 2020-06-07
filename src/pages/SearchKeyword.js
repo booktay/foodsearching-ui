@@ -88,6 +88,7 @@ class SearchKeyword extends Component {
             errorMessage: null,
             maxScore: null,
             page: 1,
+            quantity: 10,
         }
 
         this.getdata = this.getdata.bind(this)
@@ -129,7 +130,7 @@ class SearchKeyword extends Component {
                 "query": foodKeyword,
             }
         })
-        console.log(response)
+
         if (response.status === 200) {
             
             if (response.data["hits"]) {
@@ -137,6 +138,7 @@ class SearchKeyword extends Component {
                     state.foodKeyword = foodKeyword;
                     state.maxScore = response.data['max_score'];
                     state.resultDatas = response.data['hits'];
+                    state.quantity = response.data['total']['value'];
                     state.errorMessage = null;
                     return state
                 });
@@ -240,10 +242,16 @@ class SearchKeyword extends Component {
     handlePagination() {
         const { classes } = this.props;
         const { page } = this.state;
+        
+        var count = this.state.quantity;
+        if (count > 100) {
+            count = 100
+        }
+        count = Math.ceil(count / 10);
 
         return (
             <Grid item xs={12}>
-                <Pagination count={10} size="large" className={classes.paginationroot} page={page} onChange={this.handleChangePage} />
+                <Pagination count={count} size="large" className={classes.paginationroot} page={page} onChange={this.handleChangePage} />
             </Grid>
         )
     }
@@ -285,8 +293,8 @@ class SearchKeyword extends Component {
 
     render() {
         const { classes } = this.props;
-        const { resultDatas, errorMessage, page } = this.state;
-        console.log(page)
+        const { resultDatas, errorMessage } = this.state;
+
         return (
             <div className={classes.root}>
                 <Container>
