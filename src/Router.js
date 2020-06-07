@@ -2,7 +2,6 @@ import React from "react";
 import {
     Switch,
     Route,
-    Redirect,
 } from "react-router-dom";
 
 import SearchID from "./pages/SearchID";
@@ -12,9 +11,6 @@ import EditID from "./pages/EditID";
 export default function MyRouter() {
     return (
         <Switch>
-            <Route path="/id">
-                <SearchID />
-            </Route>
             <Route path="/keyword">
                 <SearchKeyword />
             </Route>
@@ -22,7 +18,7 @@ export default function MyRouter() {
                 <EditID />
             </Route>
             <Route path="/">
-                <Redirect to="/id" />
+                <SearchID />
             </Route>
         </Switch>
     );
