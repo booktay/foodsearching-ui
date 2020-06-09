@@ -70,15 +70,22 @@ class SearchID extends Component {
 
         this.getdata = this.getdata.bind(this)
         this.handleClickSearch = this.handleClickSearch.bind(this);
-
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.searchBox = this.searchBox.bind(this);
         this.resultCard = this.resultCard.bind(this);
         this.handleEmpty = this.handleEmpty.bind(this);
     }
 
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            this.handleClickSearch()
+        }
+    }
+
     handleClickSearch() {
         const { searchID } = this.state
-        
+        console.log("search", searchID)
         if (searchID !== "" && /^\d+$/.test(searchID)) {
             this.getdata(searchID)
         } else {
@@ -124,6 +131,7 @@ class SearchID extends Component {
                     placeholder="Search Food Reviews Ex. 1"
                     value={searchID}
                     onChange={e => this.setState({ searchID: e.target.value })}
+                    onKeyPress={this.handleKeyPress}
                 />
                 <Divider className={classes.divider} orientation="vertical" />
                 <IconButton color="primary" className={classes.iconButton} onClick={this.handleClickSearch}>
