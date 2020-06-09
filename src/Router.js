@@ -1,7 +1,7 @@
 import React from "react";
 import {
     Switch,
-    Route,
+    HashRouter,
 } from "react-router-dom";
 
 import SearchID from "./pages/SearchID";
@@ -11,15 +11,15 @@ import EditID from "./pages/EditID";
 export default function MyRouter() {
     return (
         <Switch>
-            <Route path="/keyword">
+            <HashRouter path="/keyword">
                 <SearchKeyword />
-            </Route>
-            <Route path="/edit">
+            </HashRouter>
+            <HashRouter path="/edit">
                 <EditID />
-            </Route>
-            <Route path="/">
+            </HashRouter>
+            <HashRouter path="/">
                 <SearchID />
-            </Route>
+            </HashRouter>
         </Switch>
     );
 }

@@ -95,6 +95,7 @@ class SearchKeyword extends Component {
         this.handleClickSearch = this.handleClickSearch.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.renderStringtoHtml = this.renderStringtoHtml.bind(this);
+        this.replaceKeywordString = this.replaceKeywordString.bind(this);
         this.searchBox = this.searchBox.bind(this);
         this.resultCard = this.resultCard.bind(this);
         this.totalCard = this.totalCard.bind(this);
@@ -162,11 +163,24 @@ class SearchKeyword extends Component {
 
     renderStringtoHtml(text) {
         const { classes } = this.props;
-        var textConvert = text.toString().replace("<keyword>", "<b>");
-            textConvert = textConvert.replace("</keyword>", "</b>");
+
+        var textConvert = text.join(" ").split("<keyword>").join(`<b style="color:#1b6ca8; font-weight: bold;">`);
+        textConvert = textConvert.split("</keyword>").join(`</b>`);
 
         return (
             <div dangerouslySetInnerHTML={{ __html: textConvert }} className={classes.reviewtext}/>
+        );
+    }
+
+    replaceKeywordString(fulltext) {
+        const { classes } = this.props;
+        const { foodKeyword } = this.state;
+
+        
+        var textConvert = fulltext.split(foodKeyword).join(`<b style="color:#1b6ca8; font-weight: bold;">` + foodKeyword + `</b>`);
+
+        return (
+            <div dangerouslySetInnerHTML={{ __html: textConvert }} className={classes.reviewtext} />
         );
     }
 
@@ -212,7 +226,7 @@ class SearchKeyword extends Component {
                     <Card>
                         <CardContent className={classes.cardTotalcontent}>
                             <Typography variant="subtitle1" gutterBottom>
-                                Maximum Keyword Matching Score : {maxScore}
+                                Max Similarity Score : {maxScore}
                             </Typography>
                         </CardContent>
                     </Card>
@@ -239,11 +253,11 @@ class SearchKeyword extends Component {
                 <Card className={classes.cardroot}>
                     <CardHeader
                         title={"Review ID : " + id}
-                        subheader={"Keyword Matching Score : " + score}
+                        subheader={"Similarity Score : " + score}
                     />
                     <CardContent className={classes.cardcontent}>
                         <Typography variant="subtitle1" gutterBottom>
-                            Review Text
+                            Similarity Text
                         </Typography>
                         <Typography variant="body1" component="span">
                             {this.renderStringtoHtml(text)}
@@ -251,8 +265,8 @@ class SearchKeyword extends Component {
                         <Typography variant="subtitle1" gutterBottom>
                             Full Text
                         </Typography>
-                    <Typography variant="body1" component="p" className={classes.reviewtext}>
-                            {fulltext}
+                        <Typography variant="body1" component="span">
+                            {this.replaceKeywordString(fulltext)}
                         </Typography>
                         <Typography variant="body2" component="p" color="secondary" className={classes.modifieddate}>
                             Last modified : {modifiedDate}
