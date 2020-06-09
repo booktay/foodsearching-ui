@@ -93,7 +93,7 @@ class SearchKeyword extends Component {
 
         this.getdata = this.getdata.bind(this)
         this.handleClickSearch = this.handleClickSearch.bind(this);
-
+        this.renderStringtoHtml = this.renderStringtoHtml.bind(this);
         this.searchBox = this.searchBox.bind(this);
         this.resultCard = this.resultCard.bind(this);
         this.totalCard = this.totalCard.bind(this);
@@ -150,6 +150,16 @@ class SearchKeyword extends Component {
                 });
             }
         }
+    }
+
+    renderStringtoHtml(text) {
+        const { classes } = this.props;
+        var textConvert = text.toString().replace("<keyword>", "<b>");
+            textConvert = textConvert.replace("</keyword>", "</b>");
+
+        return (
+            <div dangerouslySetInnerHTML={{ __html: textConvert }} className={classes.reviewtext}/>
+        );
     }
 
     searchBox() {
@@ -209,9 +219,8 @@ class SearchKeyword extends Component {
             score = document['_score'],
             id = source['reviewid'];
 
-        var text = document['highlight']["reviewtext"];
-            // text = text.replace("<keyword>", "<b>");
-            // text = text.replace("</keyword>", "</b>");
+        var fulltext = document['_source']["reviewtext"],
+            text = document['highlight']["reviewtext"];
 
         var modifiedDate = new Date(source['modified'] / 1000000);
             modifiedDate = modifiedDate.toUTCString();
@@ -227,8 +236,14 @@ class SearchKeyword extends Component {
                         <Typography variant="subtitle1" gutterBottom>
                             Review Text
                         </Typography>
-                        <Typography variant="body1" component="p" className={classes.reviewtext}>
-                            {text}
+                        <Typography variant="body1" component="span">
+                            {this.renderStringtoHtml(text)}
+                        </Typography>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Full Text
+                        </Typography>
+                    <Typography variant="body1" component="p" className={classes.reviewtext}>
+                            {fulltext}
                         </Typography>
                         <Typography variant="body2" component="p" color="secondary" className={classes.modifieddate}>
                             Last modified : {modifiedDate}
