@@ -67,7 +67,7 @@ class EditID extends Component {
 
         this.editdata = this.editdata.bind(this)
         this.handleClickSearch = this.handleClickSearch.bind(this);
-
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.searchBox = this.searchBox.bind(this);
         this.inputBox = this.inputBox.bind(this);
         this.handleEmpty = this.handleEmpty.bind(this);
@@ -76,8 +76,17 @@ class EditID extends Component {
     handleClickSearch() {
         const { searchID, modifiedText } = this.state
 
-        if (searchID !== "" && /^\d+$/.test(searchID)) {
+        if (searchID !== "" && /^\d+$/.test(searchID) && modifiedText !== "") {
             this.editdata(searchID, modifiedText)
+        } else {
+            alert("Input Error")
+        }
+    }
+
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            this.handleClickSearch()
         }
     }
 
@@ -105,6 +114,7 @@ class EditID extends Component {
                         placeholder="Search Food Reviews Ex. 1"
                         value={searchID}
                         onChange={e => this.setState({ searchID: e.target.value })}
+                        onKeyPress={this.handleKeyPress}
                     />
                     <Divider className={classes.divider} orientation="vertical" />
                     <IconButton color="primary" className={classes.iconButton} onClick={this.handleClickSearch}>
@@ -131,6 +141,7 @@ class EditID extends Component {
                         rows={10}
                         rowsMax={10}
                         onChange={e => this.setState({ modifiedText: e.target.value })}
+                        onKeyPress={this.handleKeyPress}
                     />
                 </Paper>
             </Grid>
