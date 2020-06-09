@@ -85,7 +85,7 @@ class SearchID extends Component {
 
     handleClickSearch() {
         const { searchID } = this.state
-        console.log("search", searchID)
+
         if (searchID !== "" && /^\d+$/.test(searchID)) {
             this.getdata(searchID)
         } else {

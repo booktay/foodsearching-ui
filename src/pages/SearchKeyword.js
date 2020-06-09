@@ -93,6 +93,7 @@ class SearchKeyword extends Component {
 
         this.getdata = this.getdata.bind(this)
         this.handleClickSearch = this.handleClickSearch.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.renderStringtoHtml = this.renderStringtoHtml.bind(this);
         this.searchBox = this.searchBox.bind(this);
         this.resultCard = this.resultCard.bind(this);
@@ -108,6 +109,13 @@ class SearchKeyword extends Component {
             state.page = value;
             return state
         });
+    }
+
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            this.handleClickSearch()
+        }
     }
 
     handleClickSearch() {
@@ -174,6 +182,7 @@ class SearchKeyword extends Component {
                         placeholder="Search Food Reviews Ex. ข้าวมันไก่ เนื้อน่อง ตับเครื่องใน"
                         value={searchKeyword}
                         onChange={e => this.setState({ searchKeyword: e.target.value })}
+                        onKeyPress={this.handleKeyPress}
                     />
                     <Divider className={classes.divider} orientation="vertical" />
                     <IconButton color="primary" className={classes.iconButton} aria-label="directions" onClick={this.handleClickSearch}>
